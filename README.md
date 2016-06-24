@@ -7,3 +7,4 @@ $$$ install
 
 ### before run
 + $ ./scripts/createdb.sh
++ generate md5 hash for valid company, like `$ echo -n DenisCompany | md5sum`
