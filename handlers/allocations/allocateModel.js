@@ -1,11 +1,3 @@
-// Allocation.allocateByTime()
-// Allocation.update()
-// Allocation.delete()
-// Allocation.getByallocation()
-// Allocation.getByAsset()
-// Allocation.getByTimeRange(, filters)
-
-
 'use strict';
 
 const config = require('config');

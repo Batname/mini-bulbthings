@@ -89,7 +89,7 @@ router
     if (+now >= +startDate) this.throw(422, 'Start date less then current date');
 
     const isAvalible = yield Allocate.checkAllocation({asset_id, start, finish}, this.allocateById.allocation_id);
-    if (!isAvalible) this.throw(424, 'Asset already allocated by start date');
+    if (!isAvalible) this.throw(424, 'Asset already allocated');
 
     this.body = yield Allocate.update(this.allocateById.allocation_id, start, finish);
   })
