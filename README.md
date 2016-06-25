@@ -2,8 +2,9 @@
 
 ### install
 + copy from repo
-+ `$ npm i` 
-+ `$ npm i -g gulp`
++ Install last version node.js
++ Install and run postgresql, like `$ brew install postrgesql` for mac
++ Install all node modules `$ npm i` 
 
 ### before run
 + `$ ./scripts/createdb.sh`
@@ -12,7 +13,6 @@
 
 ### run in development mode
 + `$ npm start`
-
 
 ### user api
 + Get all `$ curl -H "api-key: hash-key" localhost:3001/users/ -X GET`
