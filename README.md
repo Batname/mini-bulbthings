@@ -1,6 +1,6 @@
 # Mini bulbthings
 
-$$$ install
+### install
 + copy from repo
 + `$ npm i` 
 + `$ npm i -g gulp`
@@ -34,3 +34,6 @@ $$$ install
 + Filter for certain user `$ curl -H "api-key: hash-key" localhost:3001/allocations/user/1/ -X GET`
 + Filter for certain asset `$ curl -H "api-key: hash-key" localhost:3001/allocations/asset/1/ -X GET`
 + List of currently assigned assets `curl -H "api-key: hash-key" localhost:3001/allocations/assigned -X GET`
+
+### tests
++ Run tests `$ npm test`

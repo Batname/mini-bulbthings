@@ -21,6 +21,13 @@ exports.findById = function* (id) {
   return user[0]; 
 };
 
+exports.findByEmail = function* (email) {
+  const db = yield dbConnect();
+  const user = yield runQuery(db, {string: `select * from users where email='${email}'`});
+  db.end();
+  return user[0]; 
+};
+
 exports.create = function* (body) {
   const keys = _.keys(body).join(',');
   const values = _.values(body).map(e => `'${e}'`).join(',');

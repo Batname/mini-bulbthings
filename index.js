@@ -1,6 +1,7 @@
 'use strict';
 
 const koa = require('koa');
+const logger = require('koa-logger');
 const bodyparser = require('koa-bodyparser');
 const app = koa();
 const config = require('config');
@@ -17,6 +18,7 @@ app.use(function *(next) {
   yield* next;
 });
 
+app.use(logger());
 app.use(auth);
 app.use(error);
 
@@ -30,5 +32,8 @@ app.use(function *(){
   this.body = {status: 404, message: 'not found'};
 });
 
-app.listen(port, console.log.bind(null, `server listen port ${port}`));
-
+if (!module.parent) {
+  app.listen(port, console.log.bind(null, `server listen port ${port}`));
+} else {
+  module.exports = app;
+}

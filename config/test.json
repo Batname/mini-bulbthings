@@ -1,6 +1,6 @@
 {
   "server": {
-    "port": 3001,
+    "port": 3002,
     "host": "localhost",
     "protocol": "http"
   },
@@ -10,5 +10,6 @@
     "port": 5432,
     "max": 10,
     "idleTimeoutMillis": 30000
-  }
+  },
+  "testApiKey": "b6325b924e41288e45d7e7b8f3f40678"
 }

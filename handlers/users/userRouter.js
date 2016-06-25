@@ -46,7 +46,7 @@ router
     });
 
     if (_.isEmpty(processingBody)) this.throw(422, 'Nothing to update');
-
+    if(processingBody.email && !checkEmail(processingBody.email)) this.throw(422, 'Wrong email format');
 
     this.body = yield User.update(processingBody, this.userById.user_id);
   })
