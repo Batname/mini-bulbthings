@@ -44,7 +44,7 @@ exports.update = function* (body, id) {
   });
 
   const db = yield dbConnect();
-  yield runQuery(db, {string: `update users set ${bodyString} where user_id=${id};`});
+  yield runQuery(db, {string: `update users set ${bodyString} where user_id=${id}`});
   const user = yield runQuery(db, {string: `select * from users where user_id=${id}`});
 
   db.end(); 
@@ -54,8 +54,8 @@ exports.update = function* (body, id) {
 
 exports.delete = function* (id) {
   const db = yield dbConnect();
-  yield runQuery(db, {string: `delete from allocations where user_id=${id};`});
-  yield runQuery(db, {string: `delete from users where user_id=${id};`});
+  yield runQuery(db, {string: `delete from allocations where user_id=${id}`});
+  yield runQuery(db, {string: `delete from users where user_id=${id}`});
 
   return;
 };

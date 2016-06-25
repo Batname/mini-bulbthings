@@ -9,6 +9,7 @@ const auth = require('./middlewares/auth.js');
 const error = require('./middlewares/error.js');
 
 const userRouter = require('./handlers/users/userRouter');
+const assetRouter = require('./handlers/assets/assetRouter');
 
 app.use(function *(next) {
   this.type = 'application/json';
@@ -21,11 +22,11 @@ app.use(error);
 app.use(bodyparser());
 
 app.use(userRouter.routes());
+app.use(assetRouter.routes());
 
 app.use(function *(){
   this.body = {status: 404, message: 'not found'};
 });
-
 
 app.listen(port, console.log.bind(null, `server listen port ${port}`));
 
