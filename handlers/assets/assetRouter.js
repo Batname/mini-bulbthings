@@ -31,7 +31,7 @@ router
 
     if (type && attributes &&  _.isPlainObject(attributes)) {
       this.body = yield Asset.create({type, attributes});
-    } else this.throw(422);
+    } else this.throw(422, 'Wrong request format');
   })
   .put('/:assetById', function*(next) {
     const body = this.request.body;

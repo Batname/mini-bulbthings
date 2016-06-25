@@ -8,79 +8,75 @@ const protocol = config.get('server').protocol;
 const apiKey = config.get('testApiKey');
 const should = require('should');
 const sinon = require('sinon');
-const User = require('./userModel');
+const Asset = require('./assetModel');
 
 function getURL(path){
     return `${protocol}://${host}:${port}${path}`;
 };
 
-describe('User REST API', function(){
-
+describe('Assets REST API', function(){
   describe('POST /', function () {
 
     it('Should create user', function* (){
       const response = yield request({
         method: 'post',
-        url: getURL('/users/'),
+        url: getURL('/assets/'),
         json: true,
         headers: {'api-key': apiKey},
-        body: {first_name:'John', last_name: 'Smith', email: 'john@smith.com'}
+        body: {type: 'Ipad2', attributes: {model: 'iphone6', os: 'ios9'}}
       });
 
-      should.exist(response.body.email);
+      should.exist(response.body.type);
     });
 
-    it('throws if email already exists', function*() {
+    it('throws if type not present', function*() {
       const response = yield request({
         method: 'post',
-        url: getURL('/users/'),
+        url: getURL('/assets/'),
         json: true,
         headers: {'api-key': apiKey},
-        body: {first_name:'John', last_name: 'Smith', email: 'john@smith.com'}
+        body: {attributes: {model: 'iphone6', os: 'ios9'}}
       });
-
-      should.equal(response.statusCode, 500);
-    });
-
-    it('throws if email not valid', function*() {
-      const response = yield request({
-        method: 'post',
-        url: getURL('/users'),
-        json: true,
-        headers: {'api-key': apiKey},
-        body: {first_name:'John', last_name: 'Smith', email: 'invalid'}
-      });
-
       should.equal(response.statusCode, 422);
     });
 
+    it('throws if attributes not an object', function*() {
+      const response = yield request({
+        method: 'post',
+        url: getURL('/assets/'),
+        json: true,
+        headers: {'api-key': apiKey},
+        body: {type: 'Ipad2', attributes: ''}
+      });
+      should.equal(response.statusCode, 422);
+    });
   });
 
-  describe('GET /:userById', function() {
+  describe('GET /:assetById', function() {
     it('gets the user by id', function* (){
       const response = yield request.get({
-        url: getURL('/users/' + 3),
+        url: getURL('/assets/' + 3),
         headers: {'api-key': apiKey}
       });
 
       should.equal(response.statusCode, 200);
-      should.exist(JSON.parse(response.body).email);
+      should.exist(JSON.parse(response.body).type);
     });
 
     it('returns 404 if user does not exist', function* () {
       const response = yield request.get({
-        url: getURL('/users/23423424'),
+        url: getURL('/assets/23423424'),
         headers: {'api-key': apiKey}
       });
         should.equal(response.statusCode, 404);
     });
   });
 
-  describe('PUT /:userById', function() {
+  describe('PUT /:assetById', function() {
     it('should get Nothing to update if empty body', function* (){
       const response = yield request({
         method: 'put',
-        url: getURL('/users/' + 3),
+        url: getURL('/assets/' + 3),
         json: true,
         headers: {'api-key': apiKey},
         body: {}
@@ -92,7 +88,7 @@ describe('User REST API', function(){
     it('should get Nothing to update if not allowed fields', function* (){
       const response = yield request({
         method: 'put',
-        url: getURL('/users/' + 3),
+        url: getURL('/assets/' + 3),
         json: true,
         headers: {'api-key': apiKey},
         body: {ip: '10.10.10.10'}
@@ -101,51 +97,39 @@ describe('User REST API', function(){
       should.equal(response.statusCode, 422);
     });
 
-    it('should not update if wrong email', function* (){
-      const response = yield request({
-        method: 'put',
-        url: getURL('/users/' + 3),
-        json: true,
-        headers: {'api-key': apiKey},
-        body: {first_name: 'Denis', email: 'wrong format'}
-      });
-
-      should.equal(response.statusCode, 422);
-    });
-
     it('should update', function* (){
-      const newEmail = 'bat123123@gmail.com';
+      const newType = 'Ipad3';
       const response = yield request({
         method: 'put',
-        url: getURL('/users/' + 3),
+        url: getURL('/assets/' + 3),
         json: true,
         headers: {'api-key': apiKey},
-        body: {first_name: 'Denis', email: newEmail}
+        body: {type: newType}
       });
 
       should.equal(response.statusCode, 200);
-      should.equal(response.body.email, newEmail);
+      should.equal(response.body.type, newType);
     });
   });
 
-  describe('DELETE /:userById', function() {
-    it('removes user', function* () {
+  describe('DELETE /:assetById', function() {
+    it('removes asset', function* () {
 
       const response = yield request({
         method: 'delete',
-        url: getURL('/users/' + 3),
+        url: getURL('/assets/' + 3),
         headers: {'api-key': apiKey}
       });
 
       should.equal(response.statusCode, 200);
-      const user = yield User.findById(3);
-      should.ok(!user);
+      const asset = yield Asset.findById(3);
+      should.ok(!asset);
     });
 
-    it('returns 404 if the user does not exist', function*() {
+    it('returns 404 if the asset does not exist', function*() {
       const response = yield request({
         method: 'delete',
-        url: getURL('/users/' + 123123),
+        url: getURL('/assets/' + 123123),
         headers: {'api-key': apiKey}
       });
 
@@ -153,11 +137,11 @@ describe('User REST API', function(){
     });
   });
 
-  it('GET / gets all users', function* (){
+  it('GET / gets all assets', function* (){
 
     const response = yield request({
       method: 'get',
-      url: getURL('/users/'),
+      url: getURL('/assets/'),
       headers: {'api-key': apiKey}
     });
 
@@ -165,4 +149,5 @@ describe('User REST API', function(){
     should.equal(JSON.parse(response.body).length, 2);
 
   });
+
 });
