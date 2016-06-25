@@ -1,8 +1,3 @@
-// Asset.create()
-// Asset.getById()
-// Asset.update()
-// Asset.delete()
-
 'use strict';
 
 const config = require('config');

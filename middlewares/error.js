@@ -12,6 +12,5 @@ module.exports = function* (next) {
       this.body = {status: 500, message: e.message};
       console.error(e.message, e.stack);
     }
-  }
-   
+  } 
 };

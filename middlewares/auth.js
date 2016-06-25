@@ -12,5 +12,4 @@ module.exports = function* (next) {
     this.status = 403;
     this.body = {status: 403, message: 'You do not have access'};
   }
-   
 };

@@ -30,4 +30,4 @@ gulp.task('mocha', () => {
     });
 });
 
-gulp.task('tests', ['db-load', 'mocha'])
+gulp.task('tests', ['db-load', 'mocha']);
