@@ -14,7 +14,7 @@ const runQuery = require('../../db/runQuery');
 
 exports.all = function* () {
   const db = yield dbConnect();
-  const assets = yield runQuery(db, {string: 'select * from users'});
+  const assets = yield runQuery(db, {string: 'select * from assets'});
   db.end();
   return assets; 
 };

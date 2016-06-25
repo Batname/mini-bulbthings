@@ -26,3 +26,7 @@ $$$ install
 + Create asset `$ curl -H "api-key: hash-key" localhost:3001/assets/ -X POST -H "Content-Type:application/json" -d '{"type":"Ipad","attributes": {"model": "iphone6", "os": "ios9"}}'`
 + Update asset `curl -H "api-key: hash-key" localhost:3001/assets/1 -X PUT -H "Content-Type:application/json" -d '{"type":"Ipad","attributes": {"model": "iphone7", "os": "ios9"}}'`
 + Delete asset `curl -H "api-key: hash-key" localhost:3001/assets/2 -X DELETE`
+
+### allocation api
++ Allocate asset to user, Dates in ISO 8601 format `$ curl -H "api-key: hash-key" localhost:3001/allocations/ -X POST -H "Content-Type:application/json" -d '{"user_id":1, "asset_id": 1, "start": "2016-08-30", "finish": "2016-09-30"}'`
++ Update allocation `curl -H "api-key: api-key" localhost:3001/allocations/1 -X PUT -H "Content-Type:application/json" -d '{"start": "2016-10-08", "finish": "2016-10-09"}'`
