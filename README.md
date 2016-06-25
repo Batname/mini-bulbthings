@@ -30,3 +30,7 @@ $$$ install
 ### allocation api
 + Allocate asset to user, Dates in ISO 8601 format `$ curl -H "api-key: hash-key" localhost:3001/allocations/ -X POST -H "Content-Type:application/json" -d '{"user_id":1, "asset_id": 1, "start": "2016-08-30", "finish": "2016-09-30"}'`
 + Update allocation `curl -H "api-key: api-key" localhost:3001/allocations/1 -X PUT -H "Content-Type:application/json" -d '{"start": "2016-10-08", "finish": "2016-10-09"}'`
++ Delete allocation `curl -H "api-key: hash-key" localhost:3001/allocations/1 -X DELETE`
++ Filter for certain user `$ curl -H "api-key: hash-key" localhost:3001/allocations/user/1/ -X GET`
++ Filter for certain asset `$ curl -H "api-key: hash-key" localhost:3001/allocations/asset/1/ -X GET`
++ List of currently assigned assets `curl -H "api-key: hash-key" localhost:3001/allocations/assigned -X GET`

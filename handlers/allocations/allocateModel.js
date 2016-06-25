@@ -55,3 +55,57 @@ exports.update = function* (id, start, finish) {
 
   return allocation[0];
 };
+
+exports.delete = function* (id) {
+  const db = yield dbConnect();
+  yield runQuery(db, {string: `delete from allocations where allocation_id=${id}`});
+
+  return;
+};
+
+exports.filterByUserId = function* (id) {
+  let query = 'select allocations.allocation_id, allocations.asset_id, allocations.start, allocations.finish, ';
+  query += 'assets.type, assets.attributes ';
+  query += 'from allocations ';
+  query += 'join assets on allocations.asset_id = assets.asset_id ';
+  query += `where allocations.user_id=${id}`;
+
+  const db = yield dbConnect();
+  const allocations = yield runQuery(db, {string: query});
+  db.end();
+
+  return allocations;
+};
+
+exports.filterByAssetId = function* (id) {
+  let query = 'select allocations.allocation_id, allocations.user_id, allocations.start, allocations.finish, ';
+  query += 'users.first_name, users.last_name, users.email ';
+  query += 'from allocations ';
+  query += 'join users on allocations.user_id = users.user_id ';
+  query += `where allocations.asset_id=${id}`;
+
+  const db = yield dbConnect();
+  const allocations = yield runQuery(db, {string: query});
+  db.end();
+
+  return allocations;
+};
+
+exports.assigned = function* () {
+  let query = 'select allocations.allocation_id, allocations.start, allocations.finish, ';
+  query += 'users.first_name, users.last_name, users.email, ';
+  query += 'assets.type, assets.attributes ';
+  query += 'from allocations ';
+  query += 'join users on allocations.user_id = users.user_id ';
+  query += 'join assets on allocations.asset_id = assets.asset_id';
+
+  const db = yield dbConnect();
+  const allocations = yield runQuery(db, {string: query});
+  db.end();
+
+  return allocations;
+};
+
+
+
+

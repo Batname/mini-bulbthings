@@ -20,6 +20,28 @@ router
 
     yield* next;
   })
+  .param('userById', function*(id, next) {
+    id = parseInt(id, 10);
+
+    if (!id) this.throw(404);
+
+    this.userById = yield User.findById(id);
+
+    if (!this.userById) this.throw(404);
+
+    yield* next;
+  })
+  .param('assetById', function*(id, next) {
+    id = parseInt(id, 10);
+
+    if (!id) this.throw(404);
+
+    this.assetById = yield Asset.findById(id);
+
+    if (!this.assetById) this.throw(404);
+
+    yield* next;
+  })
   .post('/', function*(next) {
     const body = this.request.body;
     const user_id = body.user_id;
@@ -70,6 +92,20 @@ router
     if (!isAvalible) this.throw(424, 'Asset already allocated by start date');
 
     this.body = yield Allocate.update(this.allocateById.allocation_id, start, finish);
+  })
+  .delete('/:allocateById', function* (){
+    yield Allocate.delete(this.allocateById.allocation_id);
+    this.body = this.allocateById;
+  })
+  .get('/user/:userById', function* (){
+    this.body = yield Allocate.filterByUserId(this.userById.user_id);
+  })
+  .get('/asset/:assetById', function* (){
+    this.body = yield Allocate.filterByAssetId(this.assetById.asset_id);
+  })
+  .get('/assigned', function* () {
+    this.body = yield Allocate.assigned();
   });
 
 module.exports = router;
+
