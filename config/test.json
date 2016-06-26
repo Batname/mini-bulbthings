@@ -5,7 +5,7 @@
     "protocol": "http"
   },
   "dbConfig": {
-    "user": "denis",
+    "user": "apple",
     "database": "mini-bulbthings",
     "port": 5432,
     "max": 10,
