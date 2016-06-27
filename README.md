@@ -10,7 +10,6 @@
 + `$ ./scripts/createdb.sh`
 + generate md5 hash for valid company, like `$ echo -n bulbthings | md5sum`
 + Test api key for bulbthings is `8529aeb40814f72cf9238fb9c2e74142`
-+ set your user to config/*.json
 
 ### run in development mode
 + `$ npm start`
